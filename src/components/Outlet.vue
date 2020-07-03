@@ -1,5 +1,5 @@
 <template>
-  <div class="card overflow-auto" style="width: 10rem;">  
+  <div class="card overflow-auto" style="width: 12rem;">  
     <p>取出口 {{ returnTotal }}</p>
     <div v-for="boughtProduct in boughtProducts" :key="boughtProduct.id">
       <div class="card">
