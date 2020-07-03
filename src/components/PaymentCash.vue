@@ -29,7 +29,7 @@
       <button  class="btn btn-outline-success  btn-block  rounded-pill" v-on:click="cashbackAll()">おつり・返却</button>
     </div>
 
-    <p>返却口 {{ returnTotal }}円</p>
+    <p>返却口 {{ returnTotal.toLocaleString('ja-JP', {"style":"currency", "currency":"JPY"}) }}</p>
 
     <!-- ICカード決済向けのコンポーネントは別途考える-->
   </div>
