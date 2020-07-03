@@ -1,0 +1,38 @@
+<template>
+  <div class="card overflow-auto" style="width: 8rem;">  
+    <p>取出口 {{ returnTotal }}</p>
+    <div v-for="boughtProduct in boughtProducts" :key="boughtProduct.id">
+        <p class="badge badge-pill badge-info">{{ boughtProduct.name }}</p>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Outlet",
+  props: {
+  },
+  //コンポーネントの data オプションは関数でなければなりません。
+  //各インスタンスが返されるデータオブジェクトの独立したコピーを保持できるためです:
+  data: () => {
+    return {
+      boughtProducts: [],
+    };
+  },
+  methods: {
+    //購入商品の追加
+    addOutlet: function(product) {
+      this.boughtProducts.push(product);
+    },
+    //購入商品の取り出し
+    checkOutAll: function() {
+      this.boughtProducts.pop()
+    }
+  }
+};
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+
+</style>

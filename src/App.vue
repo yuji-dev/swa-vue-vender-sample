@@ -1,14 +1,28 @@
 <template>
-  <div>Hello {{ value }}</div>
+  <div id="app">
+    <Vender msg="いらっしゃいませ"/>
+  </div>
 </template>
 
 <script>
+import Vender from './components/Vender.vue'
+
 export default {
-  name: "App",
-  data() {
-    return {
-      value: "World"
-    };
+  name: 'App',
+  components: {
+    Vender  
   }
-};
+}
+
 </script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>
