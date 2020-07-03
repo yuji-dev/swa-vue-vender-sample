@@ -1,18 +1,20 @@
 <template>
-  <div class="card overflow-auto" style="width: 12rem;">  
+  <div class="card overflow-auto" style="width: 12rem;">
+    <!-- Outlet 取出口の生成-->
     <p>取出口 {{ returnTotal }}</p>
+    <!-- Outlet 取り出された商品の生成-->
     <div v-for="boughtProduct in boughtProducts" :key="boughtProduct.id">
       <div class="card">
-            <div class="row no-gutters">
-                <div class="col-auto">
-                    <img :src="boughtProduct.image" width="50" height="60"/>
-                </div>
-                <div class="col">
-                    <div class="card-block px-2">
-                        <p class="badge badge-pill badge-info">{{ boughtProduct.name }}</p>
-                    </div>
-                </div>
+        <div class="row no-gutters">
+          <div class="col-auto">
+            <img :src="boughtProduct.image" width="50" height="60" />
+          </div>
+          <div class="col">
+            <div class="card-block px-2">
+              <p class="badge badge-pill badge-info">{{ boughtProduct.name }}</p>
             </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -21,13 +23,12 @@
 <script>
 export default {
   name: "Outlet",
-  props: {
-  },
+  props: {},
   //コンポーネントの data オプションは関数でなければなりません。
   //各インスタンスが返されるデータオブジェクトの独立したコピーを保持できるためです:
   data: () => {
     return {
-      boughtProducts: [],
+      boughtProducts: []
     };
   },
   methods: {
@@ -37,7 +38,7 @@ export default {
     },
     //購入商品の取り出し
     checkOutAll: function() {
-      this.boughtProducts.pop()
+      this.boughtProducts.pop();
     }
   }
 };
@@ -45,5 +46,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

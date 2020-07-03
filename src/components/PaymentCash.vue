@@ -1,8 +1,11 @@
 <template>
   <div class="card" style="width: 16rem;">
+    <!-- PaymentCash 投入金額表示の生成-->
+    <h2
+      class="text-danger"
+    >{{ chargeTotal.toLocaleString('ja-JP', {"style":"currency", "currency":"JPY"}) }}</h2>
 
-    <h2 class="text-danger">{{ chargeTotal.toLocaleString('ja-JP', {"style":"currency", "currency":"JPY"}) }}</h2>
-
+    <!-- PaymentCash 投入金ボタンの生成（もう少しかっこいいやり方を・・）-->
     <div v-if="isActive">
       <div class="btn-group" role="group" aria-label="coin">
         <button class="btn btn-primary" v-on:click="chargeMoney(10)">10円</button>
@@ -22,13 +25,20 @@
       </div>
     </div>
 
+    <!-- PaymentCash おつり・返却ボタンの生成-->
     <div v-if="chargeTotal == 0">
-      <button  class="btn btn-outline-secondary  btn-block  rounded-pill" disabled>おつり・返却</button>
+      <!-- PaymentCash 投入金額が無い場合は非活性-->
+      <button class="btn btn-outline-secondary btn-block rounded-pill" disabled>おつり・返却</button>
     </div>
     <div v-else>
-      <button  class="btn btn-outline-success  btn-block  rounded-pill" v-on:click="cashbackAll()">おつり・返却</button>
+      <!-- PaymentCash 上記以外は活性-->
+      <button
+        class="btn btn-outline-success btn-block rounded-pill"
+        v-on:click="cashbackAll()"
+      >おつり・返却</button>
     </div>
 
+    <!-- PaymentCash 返却口の生成-->
     <p>返却口 {{ returnTotal.toLocaleString('ja-JP', {"style":"currency", "currency":"JPY"}) }}</p>
 
     <!-- ICカード決済向けのコンポーネントは別途考える-->
@@ -38,8 +48,7 @@
 <script>
 export default {
   name: "PaymentCash",
-  props: {
-  },
+  props: {},
   created: function() {
     this.chargeTotal = 0;
     this.returnTotal = 0;
@@ -86,8 +95,8 @@ export default {
       isActive: {
         type: Boolean,
         default: false
-      },
-       //おつり管理は未実装
+      }
+      //おつり管理は未実装
     };
   },
   methods: {
@@ -107,7 +116,7 @@ export default {
       //投入金額合計を更新
       this.chargeTotal += charge;
       //投入金額を上位コンポーネントに通知
-      this.$emit('updatechargeTotal', this.chargeTotal)
+      this.$emit("updatechargeTotal", this.chargeTotal);
       //通貨別の管理は未実装
     },
 
@@ -118,7 +127,7 @@ export default {
       //投入金額合計をリセット
       this.chargeTotal = 0;
       //おつり・返金イベントを上位コンポーネントに通知
-      this.$emit('cashbackAll', this.chargeTotal)
+      this.$emit("cashbackAll", this.chargeTotal);
     },
 
     // 請求
@@ -126,11 +135,9 @@ export default {
       //投入金額合計を更新
       this.chargeTotal -= price;
       //投入金額合計を上位コンポーネントに通知
-      this.$emit('updatechargeTotal', this.chargeTotal)
+      this.$emit("updatechargeTotal", this.chargeTotal);
       //通貨別の管理は未実装
-    },
-
-    
+    }
   }
 };
 //イベント名はケバブケース(kebab-case)を使うことを推奨
@@ -139,5 +146,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

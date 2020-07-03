@@ -43,6 +43,12 @@
     <div v-if="!isSupplied">
       <button class="btn btn-primary" v-on:click="supplyProduct()">まず補充</button>
     </div>
+
+    <!-- 未実装：当たり！ルーレット-->
+    <!-- 未実装：ICカード決裁向けの支払機-->
+    <!-- 未実装：テンキーパネルによる購入-->
+    <!-- 未実装：災害時の無償提供-->
+
     <!-- デバッグメッセージ -->
     <p class="text-primary">{{ message }}</p>
 
@@ -104,7 +110,7 @@ export default {
         type: Number,
         default: 0
       },
-      //売上高
+      //総販売数
       totalSoldCount: {
         type: Number,
         default: 0
@@ -130,16 +136,23 @@ export default {
   methods: {
     //商品補充
     supplyProduct: function() {
-       // 最初に適当に補充（もう一工夫したい）
+
+       //最初に適当に補充（参照解決にもう一工夫必要）
        this.$refs.refProductShowCase[0].supplyProduct(this.products[0]);
        this.$refs.refProductShowCase[4].supplyProduct(this.products[1]);
        this.$refs.refProductShowCase[5].supplyProduct(this.products[2]);
        this.$refs.refProductShowCase[6].supplyProduct(this.products[3]);
        this.$refs.refProductShowCase[7].supplyProduct(this.products[4]);
 
+       //補充済みにする
        this.isSupplied = true;
+
+       //現金支払機のスイッチを入れる
        this.$refs.refPaymentCash.switchOn();
+
+       //自動販売機のスイッチを入れる
        this.isActive = true;
+
        this.message = "Venderより：商品が補充されました"
     },
 
@@ -153,7 +166,7 @@ export default {
     //イベント：ProductShowCase 購入ボタン押下
     checkoutProduct: function(product) {
       this.message = "ProductShowCaseより：購入されました =>" + product.name
-      //請求
+      //現金支払機に請求
       this.$refs.refPaymentCash.spendMoney(product.price);
       //売上計上
       this.amount += product.price;
@@ -168,7 +181,6 @@ export default {
           this.$refs.refPaymentCash.switchOff();
           this.isActive = false;
       }
-      
     },
     //イベント：PaymentCash 現金投入
     updatechargeTotal: function(total) {
@@ -194,5 +206,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>
