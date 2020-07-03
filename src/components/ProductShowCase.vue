@@ -1,7 +1,7 @@
 <template>
   <div class="card" style="width: 8rem;">
 
-    <img class="card-img-top rounded-sm" :src="product.image"/>
+    <img class="card-img-top rounded-sm" :src="product.image" width="80" height="120"/>
     <p>{{ showcaseSetting.view_name }}</p>
 
     <p class="text-danger" v-if="showcaseSetting.hot_or_cool === 'hot'">あったか～い</p>

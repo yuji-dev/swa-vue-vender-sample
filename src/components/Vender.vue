@@ -10,7 +10,7 @@
           <div v-else>
             <h2 class="text-success">営業中</h2>
           </div>
-          総商品数 {{ totalStockCount }} 本 / 売上高 {{ amount.toLocaleString('ja-JP', {"style":"currency", "currency":"JPY"}) }}
+          総在庫数 {{ totalStockCount }} 本 / 総販売数 {{ totalSoldCount }} 本  /売上高 {{ amount.toLocaleString('ja-JP', {"style":"currency", "currency":"JPY"}) }}
         </div>
         <div class="col-md">
           <!-- ProductShowCase 商品棚の生成-->
@@ -67,6 +67,7 @@ export default {
   created: function() {
     this.message = null;
     this.totalStockCount = 0;
+    this.totalSoldCount  = 0;
     this.amount = 0;
     this.isSupplied = false;
     this.isActive = false;
@@ -98,8 +99,13 @@ export default {
         type: String,
         default: ""
       },
-      //総商品数(0になったら稼働中止)
+      //総在庫数(0になったら稼働中止)
       totalStockCount: {
+        type: Number,
+        default: 0
+      },
+      //売上高
+      totalSoldCount: {
         type: Number,
         default: 0
       },
@@ -140,7 +146,7 @@ export default {
     //イベント：ProductShowCase 在庫数量更新
     updateStock: function(currentStock) {
       this.message = "ProductShowCaseより：在庫が補充されました =>" + currentStock
-      //総商品数を更新
+      //総在庫数を更新
       this.totalStockCount += currentStock;
     },
 
@@ -153,9 +159,16 @@ export default {
       this.amount += product.price;
       //取出口に商品を出す
       this.$refs.refOutlet.addOutlet(product);
-      //総商品数を更新
+      //総在庫数を更新
       this.totalStockCount -= 1;
-
+      //総販売数を更新
+      this.totalSoldCount += 1;
+      //総在庫数が0の場合は営業終了
+      if(this.totalStockCount==0) {
+          this.$refs.refPaymentCash.switchOff();
+          this.isActive = false;
+      }
+      
     },
     //イベント：PaymentCash 現金投入
     updatechargeTotal: function(total) {

@@ -96,6 +96,11 @@ export default {
       //現金支払機の電源ON
       this.isActive = true;
     },
+    //現金支払機の電源OFF
+    switchOff: function() {
+      //現金支払機の電源OFF
+      this.isActive = false;
+    },
 
     // 現金投入
     chargeMoney: function(charge) {
