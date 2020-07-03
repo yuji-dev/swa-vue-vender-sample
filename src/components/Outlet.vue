@@ -1,8 +1,19 @@
 <template>
-  <div class="card overflow-auto" style="width: 8rem;">  
+  <div class="card overflow-auto" style="width: 10rem;">  
     <p>取出口 {{ returnTotal }}</p>
     <div v-for="boughtProduct in boughtProducts" :key="boughtProduct.id">
-        <p class="badge badge-pill badge-info">{{ boughtProduct.name }}</p>
+      <div class="card">
+            <div class="row no-gutters">
+                <div class="col-auto">
+                    <img :src="boughtProduct.image" width="50" height="60"/>
+                </div>
+                <div class="col">
+                    <div class="card-block px-2">
+                        <p class="badge badge-pill badge-info">{{ boughtProduct.name }}</p>
+                    </div>
+                </div>
+            </div>
+      </div>
     </div>
   </div>
 </template>
