@@ -1,17 +1,21 @@
 <template>
-  <div class="card overflow-auto" style="width: 12rem;">
+  <div class="overflow-auto">
+
     <!-- Outlet 取出口の生成-->
-    <p>取出口 {{ returnTotal }}</p>
+    <p class="mt-0 mb-0">取出口</p>
     <!-- Outlet 取り出された商品の生成-->
-    <div v-for="boughtProduct in boughtProducts" :key="boughtProduct.id">
-      <div class="card">
-        <div class="row no-gutters">
-          <div class="col-auto">
-            <img :src="boughtProduct.image" width="50" height="60" />
-          </div>
-          <div class="col">
-            <div class="card-block px-2">
-              <p class="badge badge-pill badge-info">{{ boughtProduct.name }}</p>
+    <div class="card-group">
+
+      <div v-for="boughtProduct in boughtProducts" :key="boughtProduct.id">
+        <div class="card" style="width: 3rem;">
+          <div class="row no-gutters">
+            <div class="col-auto">
+              <img :src="boughtProduct.image" width="50" height="60" />
+            </div>
+            <div class="col">
+              <div class="card-block px-2">
+                <!-- <p class="badge badge-pill badge-info">{{ boughtProduct.name }}</p> -->
+              </div>
             </div>
           </div>
         </div>

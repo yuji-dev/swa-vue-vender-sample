@@ -1,35 +1,45 @@
 <template>
-  <div class="card" style="width: 8rem;">
+  <div class="card mt-1 mb-1 ml-1" style="width: 8rem;">
+    
     <!-- ProductShowCase 商品画像の生成-->
-    <img class="card-img-top rounded-sm" :src="product.image" width="80" height="120" />
-    <p>{{ showcaseSetting.view_name }}</p>
-
-    <!-- ProductShowCase 温度表示の生成-->
-    <p class="text-danger" v-if="showcaseSetting.hot_or_cool === 'hot'">あったか～い</p>
-    <p class="text-primary" v-else>つめた～い</p>
+    <img class="card-img-top" :src="product.image" width="80" height="120" />
+    <p class="mt-0 mb-0">{{ showcaseSetting.view_name }}</p>
 
     <!-- ProductShowCase 価格表示の生成-->
-    <p>{{ product.price }}円</p>
+    <p class="mt-0 mb-0">{{ product.price }}円</p>
 
     <!-- ProductShowCase 在庫数表示の生成-->
-    <p>{{ product.currentStock }}本</p>
+    <p class="mt-0 mb-0">{{ product.currentStock }}本</p>
+
+    <!-- ProductShowCase 温度表示の生成-->
+    <p class="text-danger mt-0 mb-0" v-if="showcaseSetting.hot_or_cool === 'hot'">あったか～い</p>
+    <p class="text-primary mt-0 mb-0" v-else>つめた～い</p>
 
     <!-- ProductShowCase 購入ボタンの生成-->
     <div v-if="product.currentStock == 0">
       <!-- ProductShowCase 在庫がない場合は売り切れ-->
-      <button class="btn btn-outline-danger btn-block rounded-pill" disabled>売切れ</button>
+      <button class="btn btn-outline-danger btn-block rounded-pill" disabled>
+        <span class="badge badge-dark">{{ showcaseSetting.id }}</span>
+        売切れ
+      </button>
     </div>
     <div v-else-if="product.price > chargeTotal">
       <!-- ProductShowCase 投入金額が不足している場合は非活性-->
-      <button class="btn btn-outline-secondary btn-block rounded-pill" disabled>販売中</button>
+      <button class="btn btn-outline-secondary btn-block rounded-pill" disabled>
+        <span class="badge badge-dark">{{ showcaseSetting.id }}</span>
+        販売中
+      </button>
     </div>
     <div v-else>
       <!-- ProductShowCase 上記以外は活性-->
-      <button class="btn btn-outline-success btn-block rounded-pill" v-on:click="buyProduct()">購入</button>
+      <button class="btn btn-outline-success btn-block rounded-pill" v-on:click="buyProduct()">
+        <span class="badge badge-dark">{{ showcaseSetting.id }}</span>
+        購入
+      </button>
     </div>
 
     <!-- ProductShowCase （将来実装）ナンバー購入向け-->
-    <button class="btn btn-dark btn-block" disabled>{{ showcaseSetting.id }}</button>
+    <!-- <button class="btn btn-dark btn-block" disabled>{{ showcaseSetting.id }}</button> -->
   </div>
 </template>
 

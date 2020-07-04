@@ -2,44 +2,64 @@
   <div class="vender">
     <div class="container">
       <div class="row">
-        <div class="col-md-12">
-          <h1>{{ msg }}</h1>
-          <div v-if="!isActive">
-            <h2 class="text-danger">営業中止</h2>
-          </div>
-          <div v-else>
-            <h2 class="text-success">営業中</h2>
-          </div>
-          総在庫数 {{ totalStockCount }} 本 / 総販売数 {{ totalSoldCount }} 本  /売上高 {{ amount.toLocaleString('ja-JP', {"style":"currency", "currency":"JPY"}) }}
+
+        <div class="col-md-12 bg-light">
+          <!-- PaymentCash 看板パネルの生成（コンポーネント化未）-->
+          <h1 class="text-danger">{{ msg }}</h1>
         </div>
-        <div class="col-md">
-          <!-- ProductShowCase 商品棚の生成-->
-          <td v-for="showcaseSetting in showcaseSettings" :key="showcaseSetting.id">
-            <ProductShowCase 
-              :showcaseSetting="showcaseSetting" 
-              ref="refProductShowCase"
-              @checkout="checkoutProduct"
-              @updateStock="updateStock"/>
-          </td>
+
+        <div class="col-md bg-light">
+          <table>
+            <tr>
+              <!-- ProductShowCase 商品棚の生成-->
+              <td v-for="showcaseSetting in showcaseSettings" :key="showcaseSetting.id">
+                  <ProductShowCase 
+                    :showcaseSetting="showcaseSetting" 
+                    ref="refProductShowCase"
+                    @checkout="checkoutProduct"
+                    @updateStock="updateStock"/>
+              </td>
+            </tr>
+          </table>
         </div>
+
       </div>
       <br>
       <div class="row">
-        <div class="col-md-4">
+
+        <div class="col-md-3 bg-light">
+
+          <!-- PaymentCash 情報パネルの生成（コンポーネント化未）-->
+          <div class="card" style="width: 16rem;">
+            <div v-if="!isActive">
+              <h2 class="text-danger">営業中止</h2>
+            </div>
+            <div v-else>
+              <h2 class="text-success">営業中</h2>
+            </div>
+            <p class="text-left mt-0 mb-0 ml-2">総在庫数 {{ totalStockCount }} 本 </p>
+            <p class="text-left mt-0 mb-0 ml-2">総販売数 {{ totalSoldCount }} 本 </p>
+            <p class="text-left mt-0 mb-0 ml-2">売上高 {{ amount.toLocaleString('ja-JP', {"style":"currency", "currency":"JPY"}) }} </p>
+          </div>
+        </div>
+
+        <div class="col-md-3 bg-light">
           <!-- PaymentCash 現金支払機の生成-->
           <PaymentCash
             @updatechargeTotal="updatechargeTotal"
             @cashbackAll="cashbackAll"
             ref="refPaymentCash"/>
         </div>
-        <div class="col-md">
+
+        <div class="col-md bg-light ">
           <!-- PaymentCash 取出口の生成-->
           <Outlet  ref="refOutlet"/>
         </div>
+
       </div>
     </div>
 
-    <!-- PaymentCash 補充口の生成-->
+    <!-- PaymentCash 補充口の生成（コンポーネント化未）-->
     <div v-if="!isSupplied">
       <button class="btn btn-primary" v-on:click="supplyProduct()">まず補充</button>
     </div>
@@ -94,11 +114,11 @@ export default {
       ],
       //補充する商品情報
       products: [
-          {id: 1, name: "ボスブラック", size: 350, price: 130, currentStock: 12, hot_or_cool: "hot", image: require("../assets/boss_black.png")},
-          {id: 5, name: "綾鷹", size: 350, price: 150, currentStock: 10, hot_or_cool: "cool", image: require("../assets/ayataka.png")},
-          {id: 6, name: "綾鷹濃い味", size: 350, price: 150, currentStock: 10, hot_or_cool: "cool", image: require("../assets/ayataka_koi.png")},
-          {id: 7, name: "三ツ矢サイダー", size: 500, price: 150, currentStock: 10, hot_or_cool: "cool", image: require("../assets/mitsuya_cider.jpg")},
-          {id: 8, name: "クリアアサヒ", size: 500, price: 200, currentStock: 10, hot_or_cool: "cool", image: require("../assets/clearasahi.png")},
+          {id: 100, name: "ボスブラック", size: 350, price: 130, currentStock: 12, hot_or_cool: "hot", image: require("../assets/boss_black.png")},
+          {id: 200, name: "綾鷹", size: 350, price: 150, currentStock: 10, hot_or_cool: "cool", image: require("../assets/ayataka.png")},
+          {id: 300, name: "綾鷹濃い味", size: 350, price: 150, currentStock: 10, hot_or_cool: "cool", image: require("../assets/ayataka_koi.png")},
+          {id: 400, name: "三ツ矢サイダー", size: 500, price: 150, currentStock: 10, hot_or_cool: "cool", image: require("../assets/mitsuya_cider.jpg")},
+          {id: 500, name: "クリアアサヒ", size: 500, price: 200, currentStock: 10, hot_or_cool: "cool", image: require("../assets/clearasahi.png")},
       ],
       //子コンポーネントからのメッセージを表示
       message: {
