@@ -112,7 +112,7 @@ export default {
           {id: 8, view_name: "-", size: 500, maximumStock: 10, hot_or_cool: "cool"},
 
       ],
-      //補充する商品情報
+      //補充する商品情報 (Todo：あとで外から投入できるようにする、モデル的に不自然)
       products: [
           {id: 100, name: "ボスブラック", size: 350, price: 130, currentStock: 12, hot_or_cool: "hot", image: require("../assets/boss_black.png")},
           {id: 200, name: "綾鷹", size: 350, price: 150, currentStock: 10, hot_or_cool: "cool", image: require("../assets/ayataka.png")},
