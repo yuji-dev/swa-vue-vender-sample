@@ -2,8 +2,8 @@
   <div class="card mt-1 mb-1 ml-1" style="width: 8rem;">
     
     <!-- ProductShowCase 商品画像の生成-->
-    <img class="card-img-top" :src="product.image" width="80" height="120" />
-    <p class="mt-0 mb-0">{{ showcaseSetting.view_name }}</p>
+    <img class="mx-auto d-block" :src="product.image" width="60" height="110" />
+    <p class="small mt-0 mb-0">{{ showcaseSetting.view_name }}</p>
 
     <!-- ProductShowCase 価格表示の生成-->
     <p class="mt-0 mb-0">{{ product.price }}円</p>

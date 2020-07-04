@@ -7,18 +7,18 @@
 
     <!-- PaymentCash 投入金ボタンの生成（もう少しかっこいいやり方を・・）-->
     <div v-if="isActive">
-        <button class="btn btn-primary rounded-circle" v-on:click="chargeMoney(10)">10</button>
-        <button class="btn btn-primary rounded-circle" v-on:click="chargeMoney(50)">50</button>
-        <button class="btn btn-primary rounded-circle" v-on:click="chargeMoney(100)">100</button>
-        <button class="btn btn-primary rounded-circle" v-on:click="chargeMoney(500)">500</button>
-        <button class="btn btn-primary rounded-0" v-on:click="chargeMoney(1000)">1,000</button>
+        <button class="btn btn-primary rounded-circle btn-sm" v-on:click="chargeMoney(10)">10</button>
+        <button class="btn btn-primary rounded-circle btn-sm" v-on:click="chargeMoney(50)">50</button>
+        <button class="btn btn-primary rounded-circle btn-sm" v-on:click="chargeMoney(100)">100</button>
+        <button class="btn btn-primary rounded-circle btn-sm" v-on:click="chargeMoney(500)">500</button>
+        <button class="btn btn-primary rounded-0 btn-sm" v-on:click="chargeMoney(1000)">1,000</button>
     </div>
     <div v-else>
-        <button class="btn btn-secondary rounded-circle" disabled>10</button>
-        <button class="btn btn-secondary rounded-circle" disabled>50</button>
-        <button class="btn btn-secondary rounded-circle" disabled>100</button>
-        <button class="btn btn-secondary rounded-circle" disabled>500</button>
-        <button class="btn btn-secondary rounded-0" disabled>1,000</button>
+        <button class="btn btn-secondary rounded-circle btn-sm" disabled>10</button>
+        <button class="btn btn-secondary rounded-circle btn-sm" disabled>50</button>
+        <button class="btn btn-secondary rounded-circle btn-sm" disabled>100</button>
+        <button class="btn btn-secondary rounded-circle btn-sm" disabled>500</button>
+        <button class="btn btn-secondary rounded-0 btn-sm" disabled>1,000</button>
     </div>
 
     <!-- PaymentCash おつり・返却ボタンの生成-->
