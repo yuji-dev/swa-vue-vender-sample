@@ -173,7 +173,7 @@ export default {
        //自動販売機のスイッチを入れる
        this.isActive = true;
 
-       this.message = "Venderより：商品が補充されました"
+       this.message = "Venderより：商品がはじめて補充されました"
     },
 
     //イベント：ProductShowCase 在庫数量更新
@@ -204,7 +204,7 @@ export default {
     },
     //イベント：PaymentCash 現金投入
     updatechargeTotal: function(total) {
-      this.message = "PaymentCashより：入金されました =>" + total
+      this.message = "PaymentCashより：投入金額が更新されました =>" + total
       this.$refs.refProductShowCase.forEach(
         function(obj){
           obj.buyLampControl(total);
