@@ -30,7 +30,7 @@
         <div class="col-md-3 bg-light">
 
           <!-- PaymentCash 情報パネルの生成（コンポーネント化未）-->
-          <div class="card" style="width: 16rem;">
+          <div class="card">
             <div v-if="!isActive">
               <h2 class="text-danger">営業中止</h2>
             </div>
@@ -59,11 +59,7 @@
       </div>
     </div>
 
-    <!-- PaymentCash 補充口の生成（コンポーネント化未）-->
-    <div v-if="!isSupplied">
-      <button class="btn btn-primary" v-on:click="supplyProduct()">まず補充</button>
-    </div>
-
+    <!-- 未実装：メンテナンスパネル-->
     <!-- 未実装：当たり！ルーレット-->
     <!-- 未実装：ICカード決裁向けの支払機-->
     <!-- 未実装：テンキーパネルによる購入-->
@@ -95,12 +91,12 @@ export default {
     this.totalStockCount = 0;
     this.totalSoldCount  = 0;
     this.amount = 0;
-    this.isSupplied = false;
     this.isActive = false;
   },
   data: () => {
     return {
       //自動販売機の初期設定
+      //Todo:サイズ、在庫上限、温度表示設定はあとでチェック処理を実装
       showcaseSettings: [
           {id: 1, view_name: "-", size: 350, maximumStock: 10, hot_or_cool: "hot"},
           {id: 2, view_name: "-", size: 350, maximumStock: 10, hot_or_cool: "hot"},
@@ -110,15 +106,6 @@ export default {
           {id: 6, view_name: "-", size: 350, maximumStock: 10, hot_or_cool: "cool"},
           {id: 7, view_name: "-", size: 500, maximumStock: 10, hot_or_cool: "cool"},
           {id: 8, view_name: "-", size: 500, maximumStock: 10, hot_or_cool: "cool"},
-
-      ],
-      //補充する商品情報 (Todo：あとで外から投入できるようにする、モデル的に不自然)
-      products: [
-          {id: 100, name: "ボスブラック", size: 350, price: 130, currentStock: 12, hot_or_cool: "hot", image: require("../assets/boss_black.png")},
-          {id: 200, name: "綾鷹", size: 350, price: 150, currentStock: 10, hot_or_cool: "cool", image: require("../assets/ayataka.png")},
-          {id: 300, name: "綾鷹濃い味", size: 350, price: 150, currentStock: 10, hot_or_cool: "cool", image: require("../assets/ayataka_koi.png")},
-          {id: 400, name: "三ツ矢サイダー", size: 500, price: 150, currentStock: 10, hot_or_cool: "cool", image: require("../assets/mitsuya_cider.jpg")},
-          {id: 500, name: "クリアアサヒ", size: 500, price: 200, currentStock: 10, hot_or_cool: "cool", image: require("../assets/clearasahi.png")},
       ],
       //子コンポーネントからのメッセージを表示
       message: {
@@ -145,35 +132,49 @@ export default {
         type: Boolean,
         default: false
       },
-      //初回補充済か
-      isSupplied: {
-        type: Boolean,
-        default: false
-      }
-
     };
   },
   methods: {
+
     //商品補充
-    supplyProduct: function() {
+    supplyProduct: function(product_showcase_id, product) {
+       this.message = "Venderより：supplyProduct called 1" + product.name;
 
-       //最初に適当に補充（参照解決にもう一工夫必要）
-       this.$refs.refProductShowCase[0].supplyProduct(this.products[0]);
-       this.$refs.refProductShowCase[4].supplyProduct(this.products[1]);
-       this.$refs.refProductShowCase[5].supplyProduct(this.products[2]);
-       this.$refs.refProductShowCase[6].supplyProduct(this.products[3]);
-       this.$refs.refProductShowCase[7].supplyProduct(this.products[4]);
+       //指定された商品棚に補充（商品棚制約はNoCheck）
+       this.$refs.refProductShowCase.forEach(
+        function(obj) {
+          if(obj.showcaseSetting.id == product_showcase_id){
+            obj.supplyProduct(product);
+          }
+        }
+      );
 
-       //補充済みにする
-       this.isSupplied = true;
+      this.message = "Venderより：商品が補充されました";
+    },
 
-       //現金支払機のスイッチを入れる
+    //電源ON
+    switchOn: function() {
+
+       //現金支払機のスイッチをオンにする
        this.$refs.refPaymentCash.switchOn();
 
-       //自動販売機のスイッチを入れる
+       //自動販売機のスイッチをオンにする
        this.isActive = true;
 
-       this.message = "Venderより：商品がはじめて補充されました"
+       this.message = "Venderより：電源ONされました";
+
+    },
+
+    //電源OFF
+    switchOff: function() {
+      
+       //現金支払機のスイッチをオフにする
+       this.$refs.refPaymentCash.switchOff();
+
+       //自動販売機のスイッチをオフにする
+       this.isActive = false;
+
+       this.message = "Venderより：電源OFFされました";
     },
 
     //イベント：ProductShowCase 在庫数量更新
@@ -202,6 +203,7 @@ export default {
           this.isActive = false;
       }
     },
+
     //イベント：PaymentCash 現金投入
     updatechargeTotal: function(total) {
       this.message = "PaymentCashより：投入金額が更新されました =>" + total
@@ -211,6 +213,7 @@ export default {
         }
       );
     },
+    
     //イベント：PaymentCash おつり・返金
     cashbackAll: function(total) {
       this.message = "PaymentCashより：返金されました =>" + total
