@@ -40,7 +40,7 @@
             <!-- PaymentCash 現金支払機の生成-->
             <PaymentCash
               @updatechargeTotal="onUpdatechargeTotal"
-              @cashbackAll="onUashbackAll"
+              @cashbackAll="onCashbackAll"
               ref="refPaymentCash"
             />
           </div>
