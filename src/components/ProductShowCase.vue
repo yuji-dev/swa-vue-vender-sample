@@ -139,7 +139,7 @@ export default {
     removeStock: function(stock) {
       if (this.product.currentStock != 0) this.product.currentStock -= stock;
     },
-    //上位コンポーネントより：商品の補充
+    //上位コンポーネントより：商品の補充指示
     supplyProduct: function(product) {
       if (product != null) {
         //各種チェックは省略
@@ -150,7 +150,7 @@ export default {
         this.$emit("updateStock", this.product.currentStock);
       }
     },
-    //上位コンポーネントより：現在の投入金額合計を受け取る
+    //上位コンポーネントより：現在の投入金額合計を受け取る指示
     updateTotal: function(total) {
       this.chargeTotal = total;
     }

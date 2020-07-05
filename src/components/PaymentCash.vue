@@ -92,19 +92,18 @@ export default {
         type: Boolean,
         default: false
       }
-      //おつり管理は未実装
+      //通貨別おつり管理は未実装
     };
   },
   methods: {
-    //内部：現金投入
+    //内部：現金投入ボタン押下時処理
     chargeMoney: function(charge) {
       //投入金額合計を更新
       this.chargeTotal += charge;
       //投入金額を上位コンポーネントに通知
       this.$emit("updatechargeTotal", this.chargeTotal);
-      //通貨別の管理は未実装
     },
-    //内部：おつり・返金
+    //内部：おつり・返金ボタン押下時処理
     cashbackAll: function() {
       //返却口に返金
       this.returnTotal = this.chargeTotal;
@@ -113,17 +112,17 @@ export default {
       //おつり・返金イベントを上位コンポーネントに通知
       this.$emit("cashbackAll", this.chargeTotal);
     },
-    //上位コンポーネントより：現金支払機の電源ON
+    //上位コンポーネントより：現金支払機の電源ON指示
     switchOn: function() {
       //現金支払機の電源ON
       this.isActive = true;
     },
-    //上位コンポーネントより：現金支払機の電源OFF
+    //上位コンポーネントより：現金支払機の電源OFF指示
     switchOff: function() {
       //現金支払機の電源OFF
       this.isActive = false;
     },
-    //上位コンポーネントより：請求
+    //上位コンポーネントより：請求指示
     spendMoney: function(price) {
       //投入金額合計を更新
       this.chargeTotal -= price;

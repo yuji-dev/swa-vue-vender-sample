@@ -177,21 +177,18 @@ export default {
     };
   },
   methods: {
-    //商品補充
+    //上位コンポーネントより：商品補充
     supplyProduct: function(product_showcase_id, product) {
       this.message = "Venderより：supplyProduct called 1" + product.name;
-
       //指定された商品棚に補充（商品棚制約はNoCheck）
       this.$refs.refProductShowCase.forEach(function(obj) {
         if (obj.showcaseSetting.id == product_showcase_id) {
           obj.supplyProduct(product);
         }
       });
-
       this.message = "Venderより：商品が補充されました";
     },
-
-    //電源ON
+    //上位コンポーネントより：電源ON
     switchOn: function() {
       //現金支払機のスイッチをオンにする
       this.$refs.refPaymentCash.switchOn();
@@ -201,8 +198,7 @@ export default {
 
       this.message = "Venderより：電源ONされました";
     },
-
-    //電源OFF
+    //上位コンポーネントより：電源OFF
     switchOff: function() {
       //現金支払機のスイッチをオフにする
       this.$refs.refPaymentCash.switchOff();
@@ -212,16 +208,14 @@ export default {
 
       this.message = "Venderより：電源OFFされました";
     },
-
-    //イベント：ProductShowCase 在庫数量更新
+    //イベントハンドラ：ProductShowCase 在庫数量更新
     onUpdateStock: function(currentStock) {
       this.message =
         "ProductShowCaseより：在庫が補充されました =>" + currentStock;
       //総在庫数を更新
       this.totalStockCount += currentStock;
     },
-
-    //イベント：ProductShowCase 購入ボタン押下
+    //イベントハンドラ：ProductShowCase 購入ボタン押下
     onCheckoutProduct: function(product) {
       this.message = "ProductShowCaseより：購入されました =>" + product.name;
       //現金支払機に請求
@@ -240,8 +234,7 @@ export default {
         this.isActive = false;
       }
     },
-
-    //イベント：PaymentCash 現金投入
+    //イベントハンドラ：PaymentCash 現金投入
     onUpdatechargeTotal: function(total) {
       this.message = "PaymentCashより：投入金額が更新されました =>" + total;
       //すべての商品棚に投入金額合計を通知
@@ -249,8 +242,7 @@ export default {
         obj.updateTotal(total);
       });
     },
-
-    //イベント：PaymentCash おつり・返金
+    //イベントハンドラ：PaymentCash おつり・返金
     onCashbackAll: function(total) {
       this.message = "PaymentCashより：返金されました =>" + total;
       //すべての商品棚に投入金額合計を通知
