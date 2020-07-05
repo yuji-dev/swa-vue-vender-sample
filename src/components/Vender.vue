@@ -210,7 +210,7 @@ export default {
 
       this.message = "Venderより：電源ONされました";
     },
-    //上位コンポーネントより：電源OFF
+    //内部・外部：電源OFF
     switchOff: function() {
       //現金支払機のスイッチをオフにする
       this.$refs.refPaymentCash.switchOff();
@@ -245,7 +245,7 @@ export default {
       this.totalSoldCount += 1;
       //総在庫数が0の場合は営業終了
       if (this.totalStockCount == 0) {
-        this.$refs.refPaymentCash.switchOff();
+        this.switchOff();
         this.isActive = false;
       }
     },
