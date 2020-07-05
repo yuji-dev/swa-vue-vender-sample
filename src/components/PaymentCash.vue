@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="paymentcash">
     <!-- PaymentCash 投入金額表示の生成-->
     <h2
       class="text-danger"
@@ -7,18 +7,18 @@
 
     <!-- PaymentCash 投入金ボタンの生成（もう少しかっこいいやり方を・・）-->
     <div v-if="isActive">
-        <button class="btn btn-primary rounded-circle btn-sm" v-on:click="chargeMoney(10)">10</button>
-        <button class="btn btn-primary rounded-circle btn-sm" v-on:click="chargeMoney(50)">50</button>
-        <button class="btn btn-primary rounded-circle btn-sm" v-on:click="chargeMoney(100)">100</button>
-        <button class="btn btn-primary rounded-circle btn-sm" v-on:click="chargeMoney(500)">500</button>
-        <button class="btn btn-primary rounded-0 btn-sm" v-on:click="chargeMoney(1000)">1,000</button>
+      <button class="btn btn-primary rounded-circle btn-sm" v-on:click="chargeMoney(10)">10</button>
+      <button class="btn btn-primary rounded-circle btn-sm" v-on:click="chargeMoney(50)">50</button>
+      <button class="btn btn-primary rounded-circle btn-sm" v-on:click="chargeMoney(100)">100</button>
+      <button class="btn btn-primary rounded-circle btn-sm" v-on:click="chargeMoney(500)">500</button>
+      <button class="btn btn-primary rounded-0 btn-sm" v-on:click="chargeMoney(1000)">1,000</button>
     </div>
     <div v-else>
-        <button class="btn btn-secondary rounded-circle btn-sm" disabled>10</button>
-        <button class="btn btn-secondary rounded-circle btn-sm" disabled>50</button>
-        <button class="btn btn-secondary rounded-circle btn-sm" disabled>100</button>
-        <button class="btn btn-secondary rounded-circle btn-sm" disabled>500</button>
-        <button class="btn btn-secondary rounded-0 btn-sm" disabled>1,000</button>
+      <button class="btn btn-secondary rounded-circle btn-sm" disabled>10</button>
+      <button class="btn btn-secondary rounded-circle btn-sm" disabled>50</button>
+      <button class="btn btn-secondary rounded-circle btn-sm" disabled>100</button>
+      <button class="btn btn-secondary rounded-circle btn-sm" disabled>500</button>
+      <button class="btn btn-secondary rounded-0 btn-sm" disabled>1,000</button>
     </div>
 
     <!-- PaymentCash おつり・返却ボタンの生成-->
@@ -96,18 +96,7 @@ export default {
     };
   },
   methods: {
-    //現金支払機の電源ON
-    switchOn: function() {
-      //現金支払機の電源ON
-      this.isActive = true;
-    },
-    //現金支払機の電源OFF
-    switchOff: function() {
-      //現金支払機の電源OFF
-      this.isActive = false;
-    },
-
-    // 現金投入
+    //内部：現金投入
     chargeMoney: function(charge) {
       //投入金額合計を更新
       this.chargeTotal += charge;
@@ -115,8 +104,7 @@ export default {
       this.$emit("updatechargeTotal", this.chargeTotal);
       //通貨別の管理は未実装
     },
-
-    // おつり・返金
+    //内部：おつり・返金
     cashbackAll: function() {
       //返却口に返金
       this.returnTotal = this.chargeTotal;
@@ -125,8 +113,17 @@ export default {
       //おつり・返金イベントを上位コンポーネントに通知
       this.$emit("cashbackAll", this.chargeTotal);
     },
-
-    // 請求
+    //上位コンポーネントより：現金支払機の電源ON
+    switchOn: function() {
+      //現金支払機の電源ON
+      this.isActive = true;
+    },
+    //上位コンポーネントより：現金支払機の電源OFF
+    switchOff: function() {
+      //現金支払機の電源OFF
+      this.isActive = false;
+    },
+    //上位コンポーネントより：請求
     spendMoney: function(price) {
       //投入金額合計を更新
       this.chargeTotal -= price;
