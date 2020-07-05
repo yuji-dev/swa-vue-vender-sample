@@ -44,6 +44,13 @@
               ref="refPaymentCash"
             />
           </div>
+          <div class="card mt-1 mb-1 ml-1 float-right" style="width: 18rem;height: 6rem">
+            <!-- ProductSelectNumberPanel 商品番号選択ボタンパネルの生成-->
+            <ProductSelectNumberPanel
+              @pushNumberButton="onPushNumberButton"
+              ref="refProductSelectNumberPanel"
+            />
+          </div>
         </div>
       </div>
       <div class="row">
@@ -54,10 +61,10 @@
       </div>
     </div>
 
+    <!-- 未実装：テンキーパネルによる購入-->
     <!-- 未実装：メンテナンスパネル-->
     <!-- 未実装：当たり！ルーレット-->
     <!-- 未実装：ICカード決裁向けの支払機-->
-    <!-- 未実装：テンキーパネルによる購入-->
     <!-- 未実装：災害時の無償提供-->
 
     <!-- デバッグメッセージ -->
@@ -69,6 +76,7 @@
 import ProductShowCase from "./ProductShowCase.vue";
 import PaymentCash from "./PaymentCash.vue";
 import Outlet from "./Outlet.vue";
+import ProductSelectNumberPanel from "./ProductSelectNumberPanel.vue";
 
 export default {
   name: "Vender",
@@ -78,7 +86,8 @@ export default {
   components: {
     ProductShowCase,
     PaymentCash,
-    Outlet
+    Outlet,
+    ProductSelectNumberPanel
   },
   created: function() {
     this.message = null;
@@ -193,6 +202,9 @@ export default {
       //現金支払機のスイッチをオンにする
       this.$refs.refPaymentCash.switchOn();
 
+      //商品番号選択ボタンパネルのスイッチをオンにする
+      this.$refs.refProductSelectNumberPanel.switchOn();
+
       //自動販売機のスイッチをオンにする
       this.isActive = true;
 
@@ -202,6 +214,9 @@ export default {
     switchOff: function() {
       //現金支払機のスイッチをオフにする
       this.$refs.refPaymentCash.switchOff();
+
+      //商品番号選択ボタンパネルのスイッチをオンにする
+      this.$refs.refProductSelectNumberPanel.switchOff();
 
       //自動販売機のスイッチをオフにする
       this.isActive = false;
@@ -249,7 +264,17 @@ export default {
       this.$refs.refProductShowCase.forEach(function(obj) {
         obj.updateTotal(total);
       });
-    }
+    },
+    //イベントハンドラ：ProductSelectNumberPanel 商品番号選択ボタン
+    onPushNumberButton: function(number) {
+      this.message = "ProductSelectNumberPanelより：商品番号選択ボタンが押されました =>" + number;
+      //該当する商品棚に購入
+      this.$refs.refProductShowCase.forEach(function(obj) {
+        if(obj.showcaseSetting.id == number){
+          obj.buyProduct();
+        }
+      });
+    },
   }
 };
 </script>

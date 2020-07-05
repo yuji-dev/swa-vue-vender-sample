@@ -128,16 +128,18 @@ export default {
     };
   },
   methods: {
-    //内部：購入処理
+    //内部・外部：購入処理
     buyProduct: function() {
-      //在庫を減算
-      this.removeStock(1);
-      //購入イベントを上位コンポーネントに通知
-      this.$emit("checkout", this.product);
+      if(this.product.currentStock != 0 && this.product.price <= this.chargeTotal) {
+        //在庫を減算
+        this.removeStock(1);
+        //購入イベントを上位コンポーネントに通知
+        this.$emit("checkout", this.product);
+      }
     },
     //内部：在庫を減算
     removeStock: function(stock) {
-      if (this.product.currentStock != 0) this.product.currentStock -= stock;
+      this.product.currentStock -= stock;
     },
     //上位コンポーネントより：商品の補充指示
     supplyProduct: function(product) {
